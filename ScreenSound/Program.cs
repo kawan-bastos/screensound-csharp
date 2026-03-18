@@ -33,9 +33,11 @@ void ExibirOpcaoDeMenu()
     
     Console.Write("\nDigite a sua opção:");
     string opcaoEscolhida = Console.ReadLine()!;
-    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+    int opcaoEscolhidaNumerica;
+    
+    validacao(opcaoEscolhida, out opcaoEscolhidaNumerica);
 
-    switch (opcaoEscolhidaNumerica)
+      switch (opcaoEscolhidaNumerica)
     {
         case 0: Console.WriteLine("\nObrigado por usar o Screen Sound. Até mais!");  
             Thread.Sleep(2000);
@@ -78,13 +80,35 @@ void RegistrarBanda()
     string nomeDaBanda = Console.ReadLine()!;
     if (nomeDaBanda == "0")
     {
-        ExibirOpcaoDeMenu();
+        VoltarAoMenuPrincipal();
         return;
     }
-    registroDeBandas.Add(nomeDaBanda, new List<int>());
-    Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!");
-    Thread.Sleep(3000);
-    ExibirOpcaoDeMenu();
+
+    if (registroDeBandas.ContainsKey(nomeDaBanda))
+    {
+        Console.WriteLine("\nOpção inválida! Banda já existente. Tente novamente.");
+        Thread.Sleep(1500);
+        Console.Clear();
+        RegistrarBanda();
+        return;
+    }
+    else 
+    {
+       registroDeBandas.Add(nomeDaBanda, new List<int>());
+    } 
+        Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!");
+    Console.Write("\nDeseja registrar outra banda? Digite 1 para sim ou 0 para voltar ao menu principal: ");
+    string reposta = Console.ReadLine()!;
+    if (reposta == "1")
+    {
+        RegistrarBanda();
+        return;
+    }
+    else
+    {
+        VoltarAoMenuPrincipal();
+        return;
+    }   
 }
 
 void ShowAllBands()
@@ -103,7 +127,8 @@ void ShowAllBands()
     }
     Console.Write("Aperte qualquer tecla para voltar ao menu principal...");
     Console.ReadKey();
-    ExibirOpcaoDeMenu();
+    VoltarAoMenuPrincipal();
+    return;
 }
 
 
@@ -134,9 +159,7 @@ void FeedBack()
     string nomedaBanda = Console.ReadLine()!;
     if (nomedaBanda == "0")
     {
-        Console.WriteLine("\nRetornando ao menu principal...");
-        Thread.Sleep(2000);
-        ExibirOpcaoDeMenu();
+        VoltarAoMenuPrincipal();
         return;
     }
 
@@ -145,7 +168,17 @@ void FeedBack()
 
         
         Console.Write($"\nQue Nota essa {nomedaBanda} merece? (Digite um número de 0 a 10): ");
-        int nota = int.Parse(Console.ReadLine()!);
+        string notaString = Console.ReadLine()!;
+        int nota;
+        validacao(notaString, out nota);
+        
+        if(nota < 0 || nota > 10)
+        {
+            Console.WriteLine("\nNota inválida! Digite um número de 0 a 10.");
+            Thread.Sleep(1500);
+            FeedBack();
+            return;
+        }
         registroDeBandas[nomedaBanda].Add(nota);
         Console.WriteLine($"\nAgradecemos por avaliar a banda {nomedaBanda} com a nota {nota}! Registrada com Sucesso");
         Thread.Sleep(3000);
@@ -158,9 +191,7 @@ void FeedBack()
         }
         else
         {
-            Console.WriteLine("\nRetornando ao menu principal...");
-            Thread.Sleep(2000);
-            ExibirOpcaoDeMenu();
+           VoltarAoMenuPrincipal();
             return;
         }
     }
@@ -170,11 +201,7 @@ void FeedBack()
         string opcaoEscolhida = Console.ReadLine()!;
         if (opcaoEscolhida == "0")
         {
-            Console.WriteLine("\nRetornando ao menu principal...");
-            Thread.Sleep(2000);
-            ExibirOpcaoDeMenu();
-            
-            
+            VoltarAoMenuPrincipal();
             return;
         }
         else
@@ -217,20 +244,35 @@ void MediaDasBandas()
 
     if (bandaEscolhida == "0")
     {
-        Console.WriteLine("\nRetornando ao menu principal...");
-        Thread.Sleep(2000);
-        ExibirOpcaoDeMenu();
+        VoltarAoMenuPrincipal();
         return;
-    } else {
+    } 
+     
+    if (!registroDeBandas.ContainsKey(bandaEscolhida))
+    {
+        Console.Write("\nBanda não encontrada! Digite 1 para tentar novamente ou 0 para voltar ao menu Principal: ");
+        string opcaoEscolhidaNumerica = Console.ReadLine()!;
+        if (opcaoEscolhidaNumerica == "0")
+        {
+            VoltarAoMenuPrincipal();
+            return;
+        }
+        else
+        {
+            MediaDasBandas();
+            return;
+        }
+    }
+    
+    
+    if (registroDeBandas.ContainsKey(bandaEscolhida))
+    { 
         Console.WriteLine($"\nVoce Escolheu a Banda: {bandaEscolhida}");
         Thread.Sleep(2000);
         Console.WriteLine("Calculando a média de avaliações...");
         Thread.Sleep(2000);
-    }
-    
-    if (registroDeBandas.ContainsKey(bandaEscolhida))
-    {
         List<int> notas = registroDeBandas[bandaEscolhida];
+        
         if (notas.Count == 0)
         {
             Console.WriteLine("\nEssa banda ainda não possui avaliações.");
@@ -244,12 +286,10 @@ void MediaDasBandas()
             }
             else
             {
-                Console.WriteLine("\nRetornando ao menu principal...");
-                Thread.Sleep(2000);
-                ExibirOpcaoDeMenu();
+                VoltarAoMenuPrincipal();
                 return;
             }
-            return;
+            
         }
         int soma = 0;
         foreach (int nota in notas)
@@ -268,20 +308,40 @@ void MediaDasBandas()
         string resposta = Console.ReadLine()!;
         if (resposta == "0")
         {
-            Console.WriteLine("\nRetornando ao menu principal...");
-            Thread.Sleep(2000);
-            ExibirOpcaoDeMenu();
+            VoltarAoMenuPrincipal();
             return;
-
-        }
-        else
-        {
+        }else
+         {
             MediaDasBandas();
             return;
-        }
+         }
+        
 
     }
 
 }
 
+
+void VoltarAoMenuPrincipal()
+{
+    Console.WriteLine("\nRetornando ao menu principal...");
+    Thread.Sleep(2000);
     ExibirOpcaoDeMenu();
+    return;
+}
+
+void validacao(string opcaoEscolhida, out int opcaoNumerica)
+{
+    if (!int.TryParse(opcaoEscolhida, out opcaoNumerica))
+    {
+        Console.WriteLine("\nOpção inválida! Tente novamente.");
+        Thread.Sleep(1500);
+        ExibirOpcaoDeMenu();
+        return;
+    }
+}
+
+
+ExibirOpcaoDeMenu();
+
+
