@@ -1,8 +1,9 @@
 ﻿// Screen Sound
+using System.Globalization;
 using System.Runtime.Serialization;
 
 string mensagemDeBoasVindas = "Bem-vindo ao Screen Sound!";
-Dictionary<string, List<int>> registroDeBandas = new Dictionary<String, List<int>>();
+Dictionary<string, List<int>> registroDeBandas = new Dictionary<String, List<int>>(StringComparer.OrdinalIgnoreCase);
 registroDeBandas.Add("Nirvana", new List<int> { 10, 7 , 5 , 3 , 1 });
 registroDeBandas.Add("AC/DC", new List<int>());
 void ExibirLogo()
@@ -93,7 +94,9 @@ void RegistrarBanda()
         Console.WriteLine("-----------------------------------------------------");
         Console.WriteLine("Registro de Bandas");
         Console.Write("\nDigite o nome da banda que deseja registrar (Ou Digite 0 para Retornar ao menu inicial): ");
-        nomeDaBanda = Console.ReadLine()!;
+        nomeDaBanda = Console.ReadLine()!.Trim();
+        nomeDaBanda = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nomeDaBanda.ToLower());
+        
         if (nomeDaBanda == "0")
         {
             MensagemDeRetornoAoMenu();
@@ -179,7 +182,9 @@ void FeedBack()
             Console.WriteLine($"Banda: {banda}");
         }
     Console.Write("\nDigite o nome da banda que deseja avaliar (Ou Digite 0 para Retornar ao menu inicial): ");
-    string nomedaBanda = Console.ReadLine()!;
+    string nomedaBanda = Console.ReadLine()!.Trim();
+    nomedaBanda = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(nomedaBanda.ToLower());
+    
     if (nomedaBanda == "0")
     {
             MensagemDeRetornoAoMenu();
@@ -266,8 +271,9 @@ void MediaDasBandas()
         Console.WriteLine($"Banda: {banda}");
     }
     Console.Write("\nDigite o nome da banda que deseja ver a média de avaliações (Ou Digite 0 para Retornar ao menu inicial): ");
-    string bandaEscolhida = Console.ReadLine()!;
-
+    string bandaEscolhida = Console.ReadLine()!.Trim();
+    bandaEscolhida = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bandaEscolhida.ToLower());
+    
     if (bandaEscolhida == "0")
     {
             MensagemDeRetornoAoMenu();
