@@ -1,0 +1,32 @@
+﻿namespace ScreenSound.Menu;
+
+internal class Menu
+{
+    public static void MensagemDeRetornoAoMenu()
+    {
+        Console.WriteLine("\nRetornando ao menu principal...");
+        Thread.Sleep(2000);
+    }
+
+    public static void ExibirLogo()
+    {
+        Console.WriteLine(@"
+░██████╗░█████╗░██████╗░███████╗███████╗███╗░░██╗  ░██████╗░█████╗░██╗░░░██╗███╗░░██╗██████╗░
+██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗░██║  ██╔════╝██╔══██╗██║░░░██║████╗░██║██╔══██╗
+╚█████╗░██║░░╚═╝██████╔╝█████╗░░█████╗░░██╔██╗██║  ╚█████╗░██║░░██║██║░░░██║██╔██╗██║██║░░██║
+░╚═══██╗██║░░██╗██╔══██╗██╔══╝░░██╔══╝░░██║╚████║  ░╚═══██╗██║░░██║██║░░░██║██║╚████║██║░░██║
+██████╔╝╚█████╔╝██║░░██║███████╗███████╗██║░╚███║  ██████╔╝╚█████╔╝╚██████╔╝██║░╚███║██████╔╝
+╚═════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░╚══╝  ╚═════╝░░╚════╝░░╚═════╝░╚═╝░░╚══╝╚═════╝░
+");
+        Console.WriteLine("Bem-vindo ao Screen Sound!");
+    }
+
+    public static void ExibirMensagemDeErro()
+    {
+        Console.WriteLine("Opcao Invalida retornando ao menu principal...");
+        Thread.Sleep(2000);
+        return;
+    }
+    
+        
+}

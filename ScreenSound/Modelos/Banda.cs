@@ -1,9 +1,9 @@
 ﻿namespace ScreenSound.Modelos;
 
-class Banda
+internal class Banda
 {
     private List<Album> albuns = new List<Album>();
-    public List<int> notas = new();
+    public List<Avaliacao> notas = new();
 
     public Banda(string nome)
     {
@@ -11,7 +11,7 @@ class Banda
     }
 
     public string Nome { get; }
-    public double Media => notas.Average();
+    public double Media => notas.Average(a => a.Nota);
 
     public void AdicionarAlbum(Album album)
     {
@@ -38,13 +38,13 @@ class Banda
 
     }
 
-    public void AdicionarNota(int nota)
+    public void AdicionarNota(Avaliacao nota)
     {
-        if (nota >= 0 )
+        if (nota.Nota >= 0 )
         {
             notas.Add(nota);
         }
-        else if (nota < 0 || nota > 10)
+        else if (nota.Nota < 0 || nota.Nota > 10)
         {
             Console.WriteLine("Nota inválida. A nota deve ser entre 0 e 10.");
         }
