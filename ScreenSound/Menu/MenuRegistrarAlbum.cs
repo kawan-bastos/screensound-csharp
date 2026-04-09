@@ -3,13 +3,13 @@ using ScreenSound.Modelos;
 
 namespace ScreenSound.Menu;
 
-internal class RegistrarAlbum : Menu
+internal class MenuRegistrarAlbum : Menu
 {
-   public void Executar(Dictionary<string, Banda> registroDeBandas)
+   public override void Executar(Dictionary<string, Banda> registroDeBandas, Dictionary<int, Menu> menus)
     {
         do
         {
-            Console.Clear();
+            base.Executar(registroDeBandas, menus);
             Console.WriteLine(@"
 ██████╗░███████╗░██████╗░██╗░██████╗████████╗██████╗░░█████╗░  ██████╗░███████╗
 ██╔══██╗██╔════╝██╔════╝░██║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗  ██╔══██╗██╔════╝
@@ -24,15 +24,21 @@ internal class RegistrarAlbum : Menu
 ██╔══██║██║░░░░░██╔══██╗██║░░░██║██║╚██╔╝██║░╚═══██╗
 ██║░░██║███████╗██████╦╝╚██████╔╝██║░╚═╝░██║██████╔╝
 ╚═╝░░╚═╝╚══════╝╚═════╝░░╚═════╝░╚═╝░░░░░╚═╝╚═════╝░");
+            Console.WriteLine("----------------------------------------------------");
 
             Console.WriteLine("\n");
             foreach (string banda in registroDeBandas.Keys)
             {
                 Console.WriteLine($"Banda: {banda}");
             }
-            Console.Write("\nDigite o nome da Banda que deseja registrar um album: ");
+            Console.Write("\nDigite o nome da Banda que deseja registrar um album (ou 0 para voltar ao menu principal): ");
             string nomeDaBanda = Console.ReadLine()!.Trim();
 
+            if (nomeDaBanda == "0")
+            {
+                MensagemDeRetornoAoMenu();
+                return;
+            }
             if (!registroDeBandas.ContainsKey(nomeDaBanda))
             {
                 Console.Write("\nBanda nao encontrada. Digite 1 para tentar novamente ou 0 para voltar ao menu principal:");

@@ -1,4 +1,6 @@
-﻿namespace ScreenSound.Menu;
+﻿using ScreenSound.Modelos;
+
+namespace ScreenSound.Menu;
 
 internal class Menu
 {
@@ -27,6 +29,11 @@ internal class Menu
         Thread.Sleep(2000);
         return;
     }
-    
-        
+
+    public virtual void Executar(Dictionary<string, Banda> registroDeBandas, Dictionary<int, Menu> menus)
+    {
+        Console.Clear();
+    }
+
+
 }

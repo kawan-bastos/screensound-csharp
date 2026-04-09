@@ -3,14 +3,14 @@ using System.Globalization;
 
 namespace ScreenSound.Menu;
 
-internal class RegistrarBanda : Menu
+internal class MenuRegistrarBanda : Menu
 {
-    public void Executar(Dictionary<string, Banda> registroDeBandas)
+    public override void Executar(Dictionary<string, Banda> registroDeBandas, Dictionary<int, Menu> menus)
     {
         string nomeDaBanda;
         do
         {
-            Console.Clear();
+            base.Executar(registroDeBandas, menus);
             Console.WriteLine(@"
 ██████╗░███████╗░██████╗░██╗░██████╗████████╗██████╗░░█████╗░██████╗░
 ██╔══██╗██╔════╝██╔════╝░██║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔══██╗

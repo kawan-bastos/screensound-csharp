@@ -2,28 +2,28 @@
 using System.Globalization;
 
 namespace ScreenSound.Menu;
-internal class MediaDasBandas : Menu
+internal class MenuExibirDetalhes : Menu
 {
-   public void Executar(Dictionary<string, Banda> registroDeBandas)
+   public override void Executar(Dictionary<string, Banda> registroDeBandas, Dictionary<int, Menu> menus)
     {
-
         do
         {
+            base.Executar(registroDeBandas, menus);
             Console.Clear();
             Console.WriteLine(@"
-███╗░░░███╗███████╗██████╗░██╗░█████╗░  ██████╗░░█████╗░░██████╗
-████╗░████║██╔════╝██╔══██╗██║██╔══██╗  ██╔══██╗██╔══██╗██╔════╝
-██╔████╔██║█████╗░░██║░░██║██║███████║  ██║░░██║███████║╚█████╗░
-██║╚██╔╝██║██╔══╝░░██║░░██║██║██╔══██║  ██║░░██║██╔══██║░╚═══██╗
-██║░╚═╝░██║███████╗██████╔╝██║██║░░██║  ██████╔╝██║░░██║██████╔╝
-╚═╝░░░░░╚═╝╚══════╝╚═════╝░╚═╝╚═╝░░╚═╝  ╚═════╝░╚═╝░░╚═╝╚═════╝░
+██████╗░███████╗████████╗░█████╗░██╗░░░░░██╗░░██╗███████╗░██████╗  ██████╗░░█████╗░
+██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██║░░░░░██║░░██║██╔════╝██╔════╝  ██╔══██╗██╔══██╗
+██║░░██║█████╗░░░░░██║░░░███████║██║░░░░░███████║█████╗░░╚█████╗░  ██║░░██║███████║
+██║░░██║██╔══╝░░░░░██║░░░██╔══██║██║░░░░░██╔══██║██╔══╝░░░╚═══██╗  ██║░░██║██╔══██║
+██████╔╝███████╗░░░██║░░░██║░░██║███████╗██║░░██║███████╗██████╔╝  ██████╔╝██║░░██║
+╚═════╝░╚══════╝░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝╚══════╝╚═════╝░  ╚═════╝░╚═╝░░╚═╝
 
-██████╗░░█████╗░███╗░░██╗██████╗░░█████╗░░██████╗
-██╔══██╗██╔══██╗████╗░██║██╔══██╗██╔══██╗██╔════╝
-██████╦╝███████║██╔██╗██║██║░░██║███████║╚█████╗░
-██╔══██╗██╔══██║██║╚████║██║░░██║██╔══██║░╚═══██╗
-██████╦╝██║░░██║██║░╚███║██████╔╝██║░░██║██████╔╝
-╚═════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝╚═════╝░");
+██████╗░░█████╗░███╗░░██╗██████╗░░█████╗░
+██╔══██╗██╔══██╗████╗░██║██╔══██╗██╔══██╗
+██████╦╝███████║██╔██╗██║██║░░██║███████║
+██╔══██╗██╔══██║██║╚████║██║░░██║██╔══██║
+██████╦╝██║░░██║██║░╚███║██████╔╝██║░░██║
+╚═════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝");
 
             Console.WriteLine("---------------------------------------------");
 
@@ -31,7 +31,7 @@ internal class MediaDasBandas : Menu
             {
                 Console.WriteLine($"Banda: {banda}");
             }
-            Console.Write("\nDigite o nome da banda que deseja ver a média de avaliações (Ou Digite 0 para Retornar ao menu inicial): ");
+            Console.Write("\nDigite o nome da banda que deseja ver os detalhes (Ou Digite 0 para Retornar ao menu inicial): ");
             string bandaEscolhida = Console.ReadLine()!.Trim();
             bandaEscolhida = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bandaEscolhida.ToLower());
 
@@ -93,8 +93,15 @@ internal class MediaDasBandas : Menu
                     }
                 }
                 Console.WriteLine($"\n A média de avaliações da banda {bandaEscolhida} é: {banda.Media:F2}");
-                Thread.Sleep(3000);
-                Console.Write("Deseja calcular a média de avaliações de outra banda? Digite 1 para sim ou 0 para voltar ao menu principal: ");
+                Thread.Sleep(2000);
+                Console.WriteLine("\nCalculando Albuns...\n");
+                Thread.Sleep(2000);
+                foreach (var album in registroDeBandas[bandaEscolhida].Albuns)
+                {
+                    Console.WriteLine($"Album: {album.Nome} => {album.Media}");
+                }
+                Thread.Sleep(4000);
+                Console.Write("Deseja Exibir detalhes de outra banda? Digite 1 para sim ou 0 para voltar ao menu principal: ");
                 string resposta = Console.ReadLine()!;
                 if (resposta == "0")
                 {
